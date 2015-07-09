@@ -16,7 +16,7 @@ public class ReactToAudioTest : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (AudioFilterTest.currentValue >= thresholdForResponse && !rotating){
-			transform.Rotate(0,2,0);
+			//transform.Rotate(0,2,0);
 		}
 	}
 
