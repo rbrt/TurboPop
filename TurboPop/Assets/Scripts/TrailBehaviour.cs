@@ -21,7 +21,6 @@ public class TrailBehaviour : MonoBehaviour {
 		float duration = .1f;
 
 		while (true){
-			Debug.Log("Got new point!");
 			var targetPoint = GetNewPoint();
 
 			while (!AtDestination(targetPoint)){
@@ -67,7 +66,6 @@ public class TrailBehaviour : MonoBehaviour {
 	}
 
 	bool AtDestination(Vector3 destination){
-		Debug.Log(destination + " " + transform.localPosition);
 		return Vector3.Distance(destination, transform.localPosition) == 0;
 	}
 
