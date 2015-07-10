@@ -76,4 +76,17 @@ public class GridInstantiator : MonoBehaviour {
 		block.transform.localPosition = position;
 	}
 
+	public void DetermineBlocksToDestroy(GridElement element){
+
+	}
+
+
+
+
+
+
+
+
+
+
 }

@@ -13,10 +13,10 @@ public class GridElement : MonoBehaviour {
 	}
 
 	public void WasClicked(){
-		this.StartSafeCoroutine(Die());
+		GridInstantiator.Instance.DetermineBlocksToDestroy(this);
 	}
 
-	IEnumerator Die(){
+	public IEnumerator Die(){
 		var particles = GridInstantiator.Instance.GetParticlesForExplosion(this.transform, cubeColour);
 
 		for (float i = 0; i <= 1; i += Time.deltaTime / .2f){
