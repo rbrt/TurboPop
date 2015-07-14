@@ -70,7 +70,7 @@ public class GridInstantiator : MonoBehaviour {
 		GameObject block = GameObject.Instantiate(gridBlockPrefab);
 
 		int color = Random.Range(0, gridColours.Length);
-		block.GetComponent<GridElement>().Init((CubeColours)color);
+		block.GetComponent<GridSegmentElement>().Init((CubeColours)color);
 		block.transform.parent = parent;
 		block.name = "Block";
 		block.transform.localPosition = position;

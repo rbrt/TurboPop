@@ -3,7 +3,7 @@ using System.Collections;
 
 public enum CubeColours {Green, Yellow, Purple, Blue}
 
-public class GridElement : MonoBehaviour {
+public class GridSegmentElement : MonoBehaviour {
 
 	CubeColours cubeColour;
 
