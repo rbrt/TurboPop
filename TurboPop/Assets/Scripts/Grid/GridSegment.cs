@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class GridSegment : MonoBehaviour {
+public class GridSegment : MonoBehaviour{
 
-	// Use this for initialization
-	void Start () {
-	
+	List<GridSegmentRow> segmentRows;
+
+	void Awake(){
+		segmentRows = new List<GridSegmentRow>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public void AddSegmentRow(GridSegmentRow row){
+		segmentRows.Add(row);
 	}
 }

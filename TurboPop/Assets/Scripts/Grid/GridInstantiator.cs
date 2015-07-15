@@ -10,7 +10,7 @@ public class GridInstantiator : MonoBehaviour {
 								   heightValue,
 								   depthValue;
 
-	[SerializeField] protected GameObject gridBlockPrefab;
+	[SerializeField] protected GridSegmentElement gridSegmentElementPrefab;
 	[SerializeField] protected ParticleSystem explosionParticleSystem;
 
 	float offset = 1.2f;
@@ -41,39 +41,56 @@ public class GridInstantiator : MonoBehaviour {
 	}
 
 	void Start () {
-		for (int depth = 0; depth <= depthValue; depth++){
-			CreateGridLayer(depth);
+		CreateGrid();
+	}
+
+	void CreateGrid(){
+		var grid = GridController.Instance;
+
+		for (int depth = 0; depth < GridController.SegmentCount; depth++){
+			var segment = CreateGridSegment(depth);
+			segment.transform.parent = grid.transform;
+			grid.AddSegment(segment);
 		}
 	}
 
-	void CreateGridLayer(int depth){
-		GameObject grid = new GameObject("Grid");
-		grid.transform.parent = this.transform;
+	GridSegment CreateGridSegment(int depth){
+		GameObject obj = new GameObject("Segment");
+		GridSegment segment = obj.AddComponent<GridSegment>();
 
 		for (float width = -widthValue / 2; width <= (widthValue - 1) / 2; width++){
-			CreateGridRow(width, depth, grid);
+			segment.AddSegmentRow(CreateGridRow(width, depth, obj));
 		}
+
+		return segment;
 	}
 
-	void CreateGridRow(float width, int depth, GameObject grid){
-		GameObject row = new GameObject("Row");
+	GridSegmentRow CreateGridRow(float width, int depth, GameObject grid){
+		GameObject obj = new GameObject("Row");
+		var row = obj.AddComponent<GridSegmentRow>();
 		row.transform.parent = grid.transform;
 
 		for (float height = -heightValue / 2; height <= (heightValue - 1) / 2; height++){
-			CreateBlock(row.transform, new Vector3(width * offset,
-												   height * offset,
-												   depth * offset));
+			var element = CreateElement(row.transform, new Vector3(height * offset,
+												   			   	   width * offset,
+												   			   	   depth * offset));
+			element.transform.parent = row.transform;
+			row.AddElement(element);
 		}
+
+		return row;
 	}
 
-	void CreateBlock(Transform parent, Vector3 position){
-		GameObject block = GameObject.Instantiate(gridBlockPrefab);
+	GridSegmentElement CreateElement(Transform parent, Vector3 position){
+		GridSegmentElement block = GameObject.Instantiate(gridSegmentElementPrefab) as GridSegmentElement;
 
 		int color = Random.Range(0, gridColours.Length);
-		block.GetComponent<GridSegmentElement>().Init((CubeColours)color);
+		block.Init((CubeColours)color);
 		block.transform.parent = parent;
 		block.name = "Block";
 		block.transform.localPosition = position;
+
+		return block;
 	}
 
 }

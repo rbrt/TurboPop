@@ -7,14 +7,11 @@ public class TrailBehaviour : MonoBehaviour {
 		  maxX = 7f,
 		  minY = -5f,
 		  maxY = 5f,
-		  step = 1,
 		  initialZ;
-
-	SafeCoroutine animationCoroutine;
 
 	void Start(){
 		initialZ = transform.localPosition.z;
-		animationCoroutine = this.StartSafeCoroutine(Animate());
+		this.StartSafeCoroutine(Animate());
 	}
 
 	IEnumerator Animate(){
