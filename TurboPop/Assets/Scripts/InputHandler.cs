@@ -10,8 +10,10 @@ public class InputHandler : MonoBehaviour {
 			RaycastHit hit;
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			if (Physics.Raycast (ray, out hit, 100.0f)){
-				if (hit.collider.GetComponent<GridSegmentElement>() != null){
-					hit.collider.GetComponent<GridSegmentElement>().WasClicked();
+				var element = hit.collider.GetComponent<GridSegmentElement>();
+				if (element != null){
+					element.WasClicked();
+					GridController.Instance.DestroyMatchedElements(element);
 				}
 			}
 		}

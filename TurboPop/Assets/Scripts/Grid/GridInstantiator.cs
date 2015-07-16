@@ -6,9 +6,8 @@ public class GridInstantiator : MonoBehaviour {
 	[SerializeField] protected Material[] gridColours;
 	[SerializeField] protected Material[] particleColours;
 
-	[SerializeField] protected int widthValue,
-								   heightValue,
-								   depthValue;
+	protected int widthValue,
+				  heightValue;
 
 	[SerializeField] protected GridSegmentElement gridSegmentElementPrefab;
 	[SerializeField] protected ParticleSystem explosionParticleSystem;
@@ -21,6 +20,10 @@ public class GridInstantiator : MonoBehaviour {
 		get {
 			return instance;
 		}
+	}
+
+	public static GridSegment CreateNewGridSegment(){
+		return instance.CreateGridSegment(GridController.SegmentCount);
 	}
 
 	public ParticleSystem GetParticlesForExplosion(Transform target, CubeColours colour){
@@ -41,6 +44,8 @@ public class GridInstantiator : MonoBehaviour {
 	}
 
 	void Start () {
+		widthValue = GridController.GridWidth;
+		heightValue = GridController.GridHeight;
 		CreateGrid();
 	}
 

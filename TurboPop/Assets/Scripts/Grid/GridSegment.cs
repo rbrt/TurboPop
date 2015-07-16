@@ -13,4 +13,12 @@ public class GridSegment : MonoBehaviour{
 	public void AddSegmentRow(GridSegmentRow row){
 		segmentRows.Add(row);
 	}
+
+	public GridSegmentRow GetSegmentRowAtIndex(int index){
+		return segmentRows[index];
+	}
+
+	public int GetIndexOfRowInSegment(GridSegmentRow row){
+		return segmentRows.IndexOf(row);
+	}
 }

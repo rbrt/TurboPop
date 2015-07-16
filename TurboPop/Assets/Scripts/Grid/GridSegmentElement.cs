@@ -7,12 +7,22 @@ public class GridSegmentElement : MonoBehaviour {
 
 	CubeColours cubeColour;
 
+	bool destroyed;
+
+	public bool Destroyed {
+		get {
+			return destroyed;
+		}
+	}
+
 	public void Init(CubeColours cubeColour){
 		this.cubeColour = cubeColour;
 		GetComponent<MeshRenderer>().sharedMaterial = GridInstantiator.Instance.GetGridColourForType(cubeColour);
+		destroyed = false;
 	}
 
 	public void WasClicked(){
+		this.destroyed = true;
 		this.StartSafeCoroutine(Die());
 	}
 
@@ -29,6 +39,8 @@ public class GridSegmentElement : MonoBehaviour {
 		}
 
 		Destroy(particles);
-		Destroy(this.gameObject);
+
+		GetComponent<MeshRenderer>().enabled = false;
+		GetComponent<Collider>().enabled = false;
 	}
 }
