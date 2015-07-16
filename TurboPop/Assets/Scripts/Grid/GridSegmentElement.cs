@@ -15,13 +15,19 @@ public class GridSegmentElement : MonoBehaviour {
 		}
 	}
 
+	public CubeColours CubeColour {
+		get {
+			return cubeColour;
+		}
+	}
+
 	public void Init(CubeColours cubeColour){
 		this.cubeColour = cubeColour;
 		GetComponent<MeshRenderer>().sharedMaterial = GridInstantiator.Instance.GetGridColourForType(cubeColour);
 		destroyed = false;
 	}
 
-	public void WasClicked(){
+	public void DestroyElement(){
 		this.destroyed = true;
 		this.StartSafeCoroutine(Die());
 	}

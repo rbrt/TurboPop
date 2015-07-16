@@ -12,6 +12,7 @@ public class GridController : MonoBehaviour {
 
 	List<GridSegment> gridSegments;
 
+
 	public static GridController Instance{
 		get {
 			return instance;
@@ -40,25 +41,13 @@ public class GridController : MonoBehaviour {
 		gridSegments.Add(segment);
 	}
 
-	public void DestroyMatchedElements(GridSegmentElement element){
-		var frontmostElements = GetFrontmostElementsForGrid();
-
-	}
-
-	void DeterminePositionOfClickedElementInGrid(GridSegmentElement element){
-		var row = element.GetComponentInParent<GridSegmentRow>();
-
-		int x = row.GetIndexOfElementInRow(element);
-		int y = row.GetComponentInParent<GridSegment>().GetIndexOfRowInSegment(row);
-
-	}
 
 	/*
 	Builds a 2D array of GridSegmentElements with no other GridSegmentElements in front
 	of them. Indices in the array are not searched for again, because they are marked found
 	in a separate 2D array of bools.
 	*/
-	GridSegmentElement[,] GetFrontmostElementsForGrid(){
+	public GridSegmentElement[,] GetFrontmostElementsForGrid(){
 		GridSegmentElement[,] frontmostElements = new GridSegmentElement[gridHeight, gridWidth];
 		bool[,] foundElements = new bool[gridHeight, gridWidth];
 		int found = gridHeight * gridWidth;
@@ -67,7 +56,7 @@ public class GridController : MonoBehaviour {
 			for (int j = 0; j < gridHeight; j++){
 				for (int k = 0; k < gridWidth ; k++){
 					if (!foundElements[j,k]){
-						var elementToCheck = gridSegments[i].GetSegmentRowAtIndex(j).GetSegmentElementAtIndex(k);
+						var elementToCheck = gridSegments[i].GetSegmentRowAtIndex(k).GetSegmentElementAtIndex(j);
 						if (!elementToCheck.Destroyed){
 							found--;
 							frontmostElements[j,k] = elementToCheck;
@@ -86,14 +75,6 @@ public class GridController : MonoBehaviour {
 			instance = this;
 			gridSegments = new List<GridSegment>();
 		}
-	}
-
-	void Start () {
-
-	}
-
-	void Update () {
-
 	}
 
 	void LogOutFrontmostElements(){

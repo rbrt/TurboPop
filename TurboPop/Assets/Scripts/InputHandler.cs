@@ -12,8 +12,7 @@ public class InputHandler : MonoBehaviour {
 			if (Physics.Raycast (ray, out hit, 100.0f)){
 				var element = hit.collider.GetComponent<GridSegmentElement>();
 				if (element != null){
-					element.WasClicked();
-					GridController.Instance.DestroyMatchedElements(element);
+					GridElementDestroyer.Instance.DestroyMatchedElements(element);
 				}
 			}
 		}
