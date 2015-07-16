@@ -27,8 +27,9 @@ public class GridSegmentElement : MonoBehaviour {
 		destroyed = false;
 	}
 
-	public void WasClicked(){
-		GridInstantiator.Instance.DetermineBlocksToDestroy(this);
+	public void DestroyElement(){
+		this.destroyed = true;
+		this.StartSafeCoroutine(Die());
 	}
 
 	public IEnumerator Die(){
