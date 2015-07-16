@@ -5,7 +5,9 @@ using System.Collections.Generic;
 public class GridElementDestroyer : MonoBehaviour {
 
 	static GridElementDestroyer instance;
-	static int matchThreshold = 3;
+	static int matchThreshold = 3,
+			   turboAmount = 5,
+			   multiplier = 3;
 
 	List<GridSegmentElement> elementsToClear;
 
@@ -26,8 +28,6 @@ public class GridElementDestroyer : MonoBehaviour {
 		elementsToClear.Clear();
 		bool[,] checkedIndices = new bool[GridController.GridWidth, GridController.GridHeight];
 
-		Debug.Log("Original location", element.gameObject);
-
 		var frontmostElements = GridController.Instance.GetFrontmostElementsForGrid();
 		IntPair clickedPosition = DeterminePositionOfClickedElementInGrid(element);
 
@@ -38,6 +38,9 @@ public class GridElementDestroyer : MonoBehaviour {
 
 		if (elementsToClear.Count >= matchThreshold){
 			elementsToClear.ForEach(x => x.DestroyElement());
+
+			ValueHandler.Instance.Turbo += turboAmount + (elementsToClear.Count * multiplier);
+			Debug.Log(turboAmount + (elementsToClear.Count * multiplier));
 		}
 	}
 
