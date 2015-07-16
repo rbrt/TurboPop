@@ -26,6 +26,8 @@ public class GridElementDestroyer : MonoBehaviour {
 		elementsToClear.Clear();
 		bool[,] checkedIndices = new bool[GridController.GridWidth, GridController.GridHeight];
 
+		Debug.Log("Original location", element.gameObject);
+
 		var frontmostElements = GridController.Instance.GetFrontmostElementsForGrid();
 		IntPair clickedPosition = DeterminePositionOfClickedElementInGrid(element);
 
@@ -49,7 +51,7 @@ public class GridElementDestroyer : MonoBehaviour {
 								  GridSegmentElement element,
 								  IntPair coords){
 
-		if (frontmostElements[coords.x, coords.y].CubeColour == element.CubeColour){
+		if (frontmostElements[coords.x, coords.y].CubeColour == element.CubeColour && !checkedIndices[coords.x, coords.y]){
 			checkedIndices[coords.x, coords.y] = true;
 			elementsToClear.Add(frontmostElements[coords.x, coords.y]);
 		}
