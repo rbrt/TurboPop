@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum CubeColours {Green, Yellow, Purple, Blue}
+public enum CubeColours {Green, Yellow, Purple, Blue, TEMP}
 
 public class GridSegmentElement : MonoBehaviour {
 
