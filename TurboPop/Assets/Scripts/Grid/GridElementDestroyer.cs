@@ -11,6 +11,8 @@ public class GridElementDestroyer : MonoBehaviour {
 
 	List<GridSegmentElement> elementsToClear;
 
+	TurboMeter turboMeter;
+
 	public static GridElementDestroyer Instance{
 		get {
 			return instance;
@@ -22,6 +24,10 @@ public class GridElementDestroyer : MonoBehaviour {
 			instance = this;
 			elementsToClear = new List<GridSegmentElement>();
 		}
+	}
+
+	void Start(){
+		turboMeter = GUIController.Instance.GetTurboMeter();
 	}
 
 	public void DestroyMatchedElements(GridSegmentElement element){
@@ -39,7 +45,7 @@ public class GridElementDestroyer : MonoBehaviour {
 		if (elementsToClear.Count >= matchThreshold){
 			elementsToClear.ForEach(x => x.DestroyElement());
 
-			ValueHandler.Instance.Turbo += turboAmount + (elementsToClear.Count * multiplier);
+			turboMeter.Turbo += turboAmount + (elementsToClear.Count * multiplier);
 		}
 	}
 
