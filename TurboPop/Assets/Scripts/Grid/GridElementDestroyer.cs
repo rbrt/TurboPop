@@ -40,7 +40,6 @@ public class GridElementDestroyer : MonoBehaviour {
 			elementsToClear.ForEach(x => x.DestroyElement());
 
 			ValueHandler.Instance.Turbo += turboAmount + (elementsToClear.Count * multiplier);
-			Debug.Log(turboAmount + (elementsToClear.Count * multiplier));
 		}
 	}
 
@@ -53,6 +52,11 @@ public class GridElementDestroyer : MonoBehaviour {
 								  bool[,] checkedIndices,
 								  GridSegmentElement element,
 								  IntPair coords){
+
+		// Will happen if a player manages to make it through all grid segments
+		if(frontmostElements[coords.x, coords.y] == null){
+			return;
+		}
 
 		if (frontmostElements[coords.x, coords.y].CubeColour == element.CubeColour && !checkedIndices[coords.x, coords.y]){
 			checkedIndices[coords.x, coords.y] = true;
@@ -67,19 +71,19 @@ public class GridElementDestroyer : MonoBehaviour {
 				up = new IntPair(coords.x, coords.y + 1),
 				down = new IntPair(coords.x, coords.y - 1);
 
-		if (up.y < GridController.GridHeight && !checkedIndices[up.x, up.y]){
+		if (up.y < GridController.GridHeight){
 			DetermineMatchedElements(frontmostElements, checkedIndices, element, up);
 		}
 
-		if (down.y > 0 && !checkedIndices[down.x, down.y]){
+		if (down.y >= 0){
 			DetermineMatchedElements(frontmostElements, checkedIndices, element, down);
 		}
 
-		if (right.x < GridController.GridWidth && !checkedIndices[right.x, right.y]){
+		if (right.x < GridController.GridWidth){
 			DetermineMatchedElements(frontmostElements, checkedIndices, element, right);
 		}
 
-		if (left.x> 0 && !checkedIndices[left.x, left.y]){
+		if (left.x >= 0){
 			DetermineMatchedElements(frontmostElements, checkedIndices, element, left);
 		}
 	}
