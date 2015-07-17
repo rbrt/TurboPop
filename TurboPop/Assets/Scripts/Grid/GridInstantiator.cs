@@ -12,7 +12,8 @@ public class GridInstantiator : MonoBehaviour {
 	[SerializeField] protected GridSegmentElement gridSegmentElementPrefab;
 	[SerializeField] protected ParticleSystem explosionParticleSystem;
 
-	float offset = 1.2f;
+	float offset = 1.2f,
+		  initialDepth = 3.5f;
 
 	static GridInstantiator instance;
 
@@ -57,6 +58,10 @@ public class GridInstantiator : MonoBehaviour {
 			segment.transform.parent = grid.transform;
 			grid.AddSegment(segment);
 		}
+
+		grid.transform.position = new Vector3(grid.transform.position.x,
+											  grid.transform.position.y,
+											  initialDepth);
 	}
 
 	GridSegment CreateGridSegment(int depth){

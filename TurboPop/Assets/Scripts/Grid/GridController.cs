@@ -10,8 +10,27 @@ public class GridController : MonoBehaviour {
 			   gridWidth = 7,
 			   gridHeight = 7;
 
+	float movementAmount = 1.5f,
+		  movementFrequency = 15,
+		  lastMoveTime = 0;
+
 	List<GridSegment> gridSegments;
 
+	void Awake(){
+		if (instance == null){
+			instance = this;
+			gridSegments = new List<GridSegment>();
+
+			lastMoveTime = Time.time;
+		}
+	}
+
+	void Update(){
+		if (Time.time - lastMoveTime > movementFrequency){
+			lastMoveTime = Time.time;
+			AdvanceSegments();
+		}
+	}
 
 	public static GridController Instance{
 		get {
@@ -37,10 +56,19 @@ public class GridController : MonoBehaviour {
 		}
 	}
 
+	public float GetTimeRemainingUntilSegmentsAdvance(){
+		return 1 - (Time.time - lastMoveTime) / movementFrequency;
+	}
+
 	public void AddSegment(GridSegment segment){
 		gridSegments.Add(segment);
 	}
 
+	public void AdvanceSegments(){
+		gridSegments.ForEach(segment => {
+			this.StartSafeCoroutine(MoveSegment(segment));
+		});
+	}
 
 	/*
 	Builds a 2D array of GridSegmentElements with no other GridSegmentElements in front
@@ -70,13 +98,6 @@ public class GridController : MonoBehaviour {
 		return frontmostElements;
 	}
 
-	void Awake(){
-		if (instance == null){
-			instance = this;
-			gridSegments = new List<GridSegment>();
-		}
-	}
-
 	void LogOutFrontmostElements(){
 		var frontmostElements = GetFrontmostElementsForGrid();
 		for (int i = 0; i < frontmostElements.GetLength(0); i++){
@@ -84,5 +105,18 @@ public class GridController : MonoBehaviour {
 				Debug.Log(frontmostElements[i,j].ToString(), frontmostElements[i,j].gameObject);
 			}
 		}
+	}
+
+	IEnumerator MoveSegment(GridSegment segment){
+		float duration = .15f;
+		Vector3 basePosition = segment.transform.localPosition;
+		Vector3 newPosition = basePosition;
+		newPosition.z -= movementAmount;
+
+		for (float i = 0; i <= 1; i+= Time.deltaTime / duration){
+			segment.transform.localPosition = Vector3.Lerp(basePosition, newPosition, i);
+			yield return null;
+		}
+		segment.transform.localPosition = newPosition;
 	}
 }
