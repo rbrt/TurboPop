@@ -6,8 +6,8 @@ public class GridElementDestroyer : MonoBehaviour {
 
 	static GridElementDestroyer instance;
 	static int matchThreshold = 3,
-			   turboAmount = 5,
-			   multiplier = 3;
+			   turboAmount = 10,
+			   multiplier = 6;
 
 	List<GridSegmentElement> elementsToClear;
 

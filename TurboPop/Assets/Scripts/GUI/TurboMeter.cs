@@ -12,7 +12,7 @@ public class TurboMeter : MonoBehaviour {
 		displayedTurbo = 0;
 
 	float lastTime = 0,
-		  turboDecrementFrequency = .1f;
+		  turboDecrementFrequency = .04f;
 
 	string turboMeterPercentage = "_Percentage";
 
