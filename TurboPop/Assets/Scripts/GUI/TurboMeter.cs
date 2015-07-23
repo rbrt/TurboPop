@@ -18,6 +18,8 @@ public class TurboMeter : MonoBehaviour {
 
 	string turboMeterPercentage = "_Percentage";
 
+	bool showingTurboEffect = false;
+
 	public int Turbo {
 		get {
 			return turbo;
@@ -32,7 +34,7 @@ public class TurboMeter : MonoBehaviour {
 	}
 
 	void Update(){
-		if (Time.time - lastTime > turboDecrementFrequency){
+		if (Time.time - lastTime > turboDecrementFrequency && !showingTurboEffect){
 			lastTime = Time.time;
 			Turbo--;
 		}
@@ -41,19 +43,28 @@ public class TurboMeter : MonoBehaviour {
 			displayedTurbo += (Turbo - displayedTurbo) / 4;
 		}
 		else if (displayedTurbo > Turbo){
-			displayedTurbo -= 1;
+			displayedTurbo -= (displayedTurbo - Turbo) / 4;
+			if (displayedTurbo < 0){
+				displayedTurbo = 0;
+			}
 		}
 
 		turboMeterMaterial.SetFloat(turboMeterPercentage, displayedTurbo / 100f);
 
 		if (Turbo >= maxTurbo * .95f){
-			HandleTurbo();
-			Turbo = 0;
+			this.StartSafeCoroutine(HandleTurbo());
 		}
 
 	}
 
-	void HandleTurbo(){
+	IEnumerator HandleTurbo(){
+		showingTurboEffect = true;
+		Turbo = 100;
+
 		GridElementDestroyer.Instance.DestroyFrontmostSegment();
+		yield return new WaitForSeconds(.2f);
+
+		showingTurboEffect = false;
+		Turbo = 0;
 	}
 }
