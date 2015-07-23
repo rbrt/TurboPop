@@ -7,8 +7,8 @@ public class TurboMeter : MonoBehaviour {
 
 	const int maxTurbo = 100,
 			  minTurbo = 0,
-			  turboAmount = 10,
- 		 	  multiplier = 6;
+			  turboAmount = 15,
+ 		 	  multiplier = 7;
 
 	int turbo = 0,
 		displayedTurbo = 0;
@@ -46,6 +46,14 @@ public class TurboMeter : MonoBehaviour {
 
 		turboMeterMaterial.SetFloat(turboMeterPercentage, displayedTurbo / 100f);
 
+		if (Turbo >= maxTurbo * .95f){
+			HandleTurbo();
+			Turbo = 0;
+		}
 
+	}
+
+	void HandleTurbo(){
+		GridElementDestroyer.Instance.DestroyFrontmostSegment();
 	}
 }

@@ -6,6 +6,12 @@ public class GridSegmentRow : MonoBehaviour {
 
 	List<GridSegmentElement> elements;
 
+	public List<GridSegmentElement> Elements{
+		get {
+			return elements;
+		}
+	}
+
 	void Awake(){
 		elements = new List<GridSegmentElement>();
 	}

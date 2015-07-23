@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class GridSegment : MonoBehaviour{
 
@@ -17,7 +18,7 @@ public class GridSegment : MonoBehaviour{
 	}
 
 	public void ClearSegment(){
-		
+
 	}
 
 	public void AddSegmentRow(GridSegmentRow row){
@@ -30,6 +31,24 @@ public class GridSegment : MonoBehaviour{
 
 	public int GetIndexOfRowInSegment(GridSegmentRow row){
 		return segmentRows.IndexOf(row);
+	}
+
+	public List<GridSegmentElement> GetAllElementsInSegment(){
+		List<GridSegmentElement> elementsInSegment = new List<GridSegmentElement>();
+		for (int i = 0; i < segmentRows.Count; i++){
+			elementsInSegment.AddRange(segmentRows[i].Elements);
+		}
+
+		return elementsInSegment;
+	}
+
+	public List<GridSegmentElement> GetAllUndestroyedElementsInSegment(){
+		List<GridSegmentElement> elementsInSegment = new List<GridSegmentElement>();
+		for (int i = 0; i < segmentRows.Count; i++){
+			elementsInSegment.AddRange(segmentRows[i].Elements.Where(x => !x.Destroyed));
+		}
+
+		return elementsInSegment;
 	}
 
 	public bool IsDestroyed(){

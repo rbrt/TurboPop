@@ -45,6 +45,12 @@ public class GridElementDestroyer : MonoBehaviour {
 		}
 	}
 
+	public void DestroyFrontmostSegment(){
+		var frontmostSegment = GridController.Instance.GetFrontmostSegment();
+		var elements = frontmostSegment.GetAllUndestroyedElementsInSegment();
+		elements.ForEach(x => x.DestroyElement());
+	}
+
 	public void DestroyElements(List<GridSegmentElement> elements){
 		elementsToClear.ForEach(x => x.DestroyElement());
 		turboMeter.IncreaseTurbo(elementsToClear.Count);

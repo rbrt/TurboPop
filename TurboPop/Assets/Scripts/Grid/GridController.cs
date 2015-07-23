@@ -85,6 +85,10 @@ public class GridController : MonoBehaviour {
 		});
 	}
 
+	public GridSegment GetFrontmostSegment(){
+		return gridSegments[0];
+	}
+
 	void HandleFrontmostSegmentOnAdvance(){
 		// if the frontmost segment is not destroyed, push it forward and "kill"
 		// any columns that remain.

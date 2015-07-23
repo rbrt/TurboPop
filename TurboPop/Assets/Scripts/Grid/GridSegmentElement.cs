@@ -31,6 +31,10 @@ public class GridSegmentElement : MonoBehaviour {
 	}
 
 	public void DestroyElement(){
+		if (this.destroyed){
+			return;
+		}
+		
 		this.destroyed = true;
 		this.StartSafeCoroutine(Die());
 	}
