@@ -23,6 +23,9 @@ public class GridSegmentElement : MonoBehaviour {
 
 	public void InitializeElement(CubeColours cubeColour){
 		this.cubeColour = cubeColour;
+		GetComponent<MeshRenderer>().enabled = true;
+		GetComponent<Collider>().enabled = true;
+		transform.localScale = Vector3.one;
 		GetComponent<MeshRenderer>().sharedMaterial = GridInstantiator.Instance.GetGridColourForType(cubeColour);
 		destroyed = false;
 	}
