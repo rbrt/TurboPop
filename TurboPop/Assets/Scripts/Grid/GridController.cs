@@ -10,11 +10,13 @@ public class GridController : MonoBehaviour {
 			   gridWidth = 7,
 			   gridHeight = 7;
 
-	float movementAmount = 1.5f,
-		  movementFrequency = 15,
+	float movementAmount = 0,
+		  movementFrequency = 5,
 		  lastMoveTime = 0;
 
 	List<GridSegment> gridSegments;
+
+	GridSegment bufferSegment;
 
 	void Awake(){
 		if (instance == null){
@@ -23,6 +25,11 @@ public class GridController : MonoBehaviour {
 
 			lastMoveTime = Time.time;
 		}
+	}
+
+	void Start(){
+		movementAmount = GridInstantiator.Offset;
+		GridInstantiator.Instance.CreateGrid();
 	}
 
 	void Update(){
@@ -56,6 +63,12 @@ public class GridController : MonoBehaviour {
 		}
 	}
 
+	public void SetBufferSegment(GridSegment segment){
+		bufferSegment = segment;
+		segment.transform.position = Vector3.one * 500;
+		bufferSegment.ClearSegment();
+	}
+
 	public float GetTimeRemainingUntilSegmentsAdvance(){
 		return 1 - (Time.time - lastMoveTime) / movementFrequency;
 	}
@@ -65,9 +78,42 @@ public class GridController : MonoBehaviour {
 	}
 
 	public void AdvanceSegments(){
+		HandleFrontmostSegmentOnAdvance();
+
 		gridSegments.ForEach(segment => {
 			this.StartSafeCoroutine(MoveSegment(segment));
 		});
+	}
+
+	void HandleFrontmostSegmentOnAdvance(){
+		// if the frontmost segment is not destroyed, push it forward and "kill"
+		// any columns that remain.
+		if (!gridSegments[0].IsDestroyed()){
+			/*
+			This logic can come later, because it shouldn't matter until we have
+			reuse of segments working properly
+			*/
+		}
+
+		// Deparent frontmostSegment and remove from list
+		var oldFrontmostSegment = gridSegments[0];
+		var oldCoords = oldFrontmostSegment.transform.localPosition;
+		oldFrontmostSegment.transform.parent = null;
+
+		gridSegments.RemoveAt(0);
+
+		// Set bufferSegment as last segment in grid
+		gridSegments.Add(bufferSegment);
+
+		// Initialize last segment
+		bufferSegment.InitializeSegment();
+		bufferSegment.transform.parent = transform;
+		bufferSegment.transform.localPosition = new Vector3(oldCoords.x,
+															oldCoords.y,
+															oldCoords.z + SegmentCount * GridInstantiator.Offset);
+
+		// Set old frontmost segment as bufferSegment and clear it
+		SetBufferSegment(oldFrontmostSegment);
 	}
 
 	/*

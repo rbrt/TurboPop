@@ -21,7 +21,7 @@ public class GridSegmentElement : MonoBehaviour {
 		}
 	}
 
-	public void Init(CubeColours cubeColour){
+	public void InitializeElement(CubeColours cubeColour){
 		this.cubeColour = cubeColour;
 		GetComponent<MeshRenderer>().sharedMaterial = GridInstantiator.Instance.GetGridColourForType(cubeColour);
 		destroyed = false;

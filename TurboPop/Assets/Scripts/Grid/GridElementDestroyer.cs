@@ -5,9 +5,7 @@ using System.Collections.Generic;
 public class GridElementDestroyer : MonoBehaviour {
 
 	static GridElementDestroyer instance;
-	static int matchThreshold = 3,
-			   turboAmount = 10,
-			   multiplier = 6;
+	static int matchThreshold = 3;
 
 	List<GridSegmentElement> elementsToClear;
 
@@ -43,10 +41,13 @@ public class GridElementDestroyer : MonoBehaviour {
 								 clickedPosition);
 
 		if (elementsToClear.Count >= matchThreshold){
-			elementsToClear.ForEach(x => x.DestroyElement());
-
-			turboMeter.Turbo += turboAmount + (elementsToClear.Count * multiplier);
+			DestroyElements(elementsToClear);
 		}
+	}
+
+	public void DestroyElements(List<GridSegmentElement> elements){
+		elementsToClear.ForEach(x => x.DestroyElement());
+		turboMeter.IncreaseTurbo(elementsToClear.Count);
 	}
 
 	/*

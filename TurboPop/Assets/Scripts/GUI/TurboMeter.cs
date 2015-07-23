@@ -6,9 +6,11 @@ public class TurboMeter : MonoBehaviour {
 	[SerializeField] protected Material turboMeterMaterial;
 
 	const int maxTurbo = 100,
-			  minTurbo = 0;
+			  minTurbo = 0,
+			  turboAmount = 10,
+ 		 	  multiplier = 6;
 
-	int turbo =0,
+	int turbo = 0,
 		displayedTurbo = 0;
 
 	float lastTime = 0,
@@ -25,6 +27,9 @@ public class TurboMeter : MonoBehaviour {
 		}
 	}
 
+	public void IncreaseTurbo(int elementCount){
+		Turbo += turboAmount + (elementCount * multiplier);
+	}
 
 	void Update(){
 		if (Time.time - lastTime > turboDecrementFrequency){

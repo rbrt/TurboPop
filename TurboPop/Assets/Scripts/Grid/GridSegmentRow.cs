@@ -10,6 +10,12 @@ public class GridSegmentRow : MonoBehaviour {
 		elements = new List<GridSegmentElement>();
 	}
 
+	public void InitializeRow(){
+		for (int i = 0; i < elements.Count; i++){
+			elements[i].InitializeElement(GridInstantiator.Instance.GetRandomCubeColour());
+		}
+	}
+
 	public void AddElement(GridSegmentElement element){
 		elements.Add(element);
 	}
@@ -20,5 +26,15 @@ public class GridSegmentRow : MonoBehaviour {
 
 	public int GetIndexOfElementInRow(GridSegmentElement element){
 		return elements.IndexOf(element);
+	}
+
+	public bool IsDestroyed(){
+		for (int i = 0; i < elements.Count; i++){
+			if (elements[i].Destroyed){
+				return false;
+			}
+		}
+
+		return true;
 	}
 }

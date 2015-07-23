@@ -10,6 +10,16 @@ public class GridSegment : MonoBehaviour{
 		segmentRows = new List<GridSegmentRow>();
 	}
 
+	public void InitializeSegment(){
+		for (int i = 0; i < segmentRows.Count; i++){
+			segmentRows[i].InitializeRow();
+		}
+	}
+
+	public void ClearSegment(){
+		
+	}
+
 	public void AddSegmentRow(GridSegmentRow row){
 		segmentRows.Add(row);
 	}
@@ -20,5 +30,15 @@ public class GridSegment : MonoBehaviour{
 
 	public int GetIndexOfRowInSegment(GridSegmentRow row){
 		return segmentRows.IndexOf(row);
+	}
+
+	public bool IsDestroyed(){
+		for (int i = 0; i < segmentRows.Count; i++){
+			if (segmentRows[i].IsDestroyed()){
+				return false;
+			}
+		}
+
+		return true;
 	}
 }

@@ -27,6 +27,18 @@ public class GridInstantiator : MonoBehaviour {
 		return instance.CreateGridSegment(GridController.SegmentCount);
 	}
 
+	public static float InitialDepth {
+		get {
+			return instance.initialDepth;
+		}
+	}
+
+	public static float Offset {
+		get {
+			return instance.offset;
+		}
+	}
+
 	public ParticleSystem GetParticlesForExplosion(Transform target, CubeColours colour){
 		var ps = GameObject.Instantiate(explosionParticleSystem, target.position, target.rotation) as ParticleSystem;
 		ps.GetComponent<Renderer>().material = particleColours[(int)colour];
@@ -47,10 +59,9 @@ public class GridInstantiator : MonoBehaviour {
 	void Start () {
 		widthValue = GridController.GridWidth;
 		heightValue = GridController.GridHeight;
-		CreateGrid();
 	}
 
-	void CreateGrid(){
+	public void CreateGrid(){
 		var grid = GridController.Instance;
 
 		for (int depth = 0; depth < GridController.SegmentCount; depth++){
@@ -59,9 +70,17 @@ public class GridInstantiator : MonoBehaviour {
 			grid.AddSegment(segment);
 		}
 
+		var bufferSegment = CreateGridSegment(GridController.SegmentCount);
+		grid.SetBufferSegment(bufferSegment);
+
 		grid.transform.position = new Vector3(grid.transform.position.x,
 											  grid.transform.position.y,
 											  initialDepth);
+	}
+
+	public CubeColours GetRandomCubeColour(){
+		int color = Random.Range(0, gridColours.Length);
+		return (CubeColours)color;
 	}
 
 	GridSegment CreateGridSegment(int depth){
@@ -71,6 +90,8 @@ public class GridInstantiator : MonoBehaviour {
 		for (float width = -widthValue / 2; width <= (widthValue - 1) / 2; width++){
 			segment.AddSegmentRow(CreateGridRow(width, depth, obj));
 		}
+
+		segment.transform.localPosition = new Vector3(0, 0, depth * offset);
 
 		return segment;
 	}
@@ -83,7 +104,7 @@ public class GridInstantiator : MonoBehaviour {
 		for (float height = -heightValue / 2; height <= (heightValue - 1) / 2; height++){
 			var element = CreateElement(row.transform, new Vector3(height * offset,
 												   			   	   width * offset,
-												   			   	   depth * offset));
+												   			   	   0));
 			element.transform.parent = row.transform;
 			row.AddElement(element);
 		}
@@ -94,8 +115,7 @@ public class GridInstantiator : MonoBehaviour {
 	GridSegmentElement CreateElement(Transform parent, Vector3 position){
 		GridSegmentElement block = GameObject.Instantiate(gridSegmentElementPrefab) as GridSegmentElement;
 
-		int color = Random.Range(0, gridColours.Length);
-		block.Init((CubeColours)color);
+		block.InitializeElement(GetRandomCubeColour());
 		block.transform.parent = parent;
 		block.name = "Block";
 		block.transform.localPosition = position;
