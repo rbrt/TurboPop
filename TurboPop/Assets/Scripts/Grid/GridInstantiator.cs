@@ -53,12 +53,9 @@ public class GridInstantiator : MonoBehaviour {
 	void Awake(){
 		if (instance == null){
 			instance = this;
+			widthValue = GridController.GridWidth;
+			heightValue = GridController.GridHeight;
 		}
-	}
-
-	void Start () {
-		widthValue = GridController.GridWidth;
-		heightValue = GridController.GridHeight;
 	}
 
 	public void CreateGrid(){
