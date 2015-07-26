@@ -139,6 +139,10 @@ public class GridController : MonoBehaviour {
 		// any columns that remain.
 		if (!gridSegments[0].IsDestroyed()){
 			HandleUndestroyedSegmentElements(gridSegments[0]);
+
+			if (gridSegments[0].AllElementsDead()){
+				GameStateController.Instance.LoseGame();
+			}
 		}
 
 		// Deparent frontmostSegment and remove from list

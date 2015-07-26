@@ -38,6 +38,16 @@ public class GridSegmentRow : MonoBehaviour {
 		return elements.IndexOf(element);
 	}
 
+	public bool IsDead(){
+		for (int i = 0; i < elements.Count; i++){
+			if (!elements[i].Dead){
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	public bool IsDestroyed(){
 		for (int i = 0; i < elements.Count; i++){
 			if (elements[i].Destroyed){

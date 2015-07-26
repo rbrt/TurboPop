@@ -59,6 +59,16 @@ public class GridSegment : MonoBehaviour{
 		return elementsInSegment;
 	}
 
+	public bool AllElementsDead(){
+		for (int i = 0; i < segmentRows.Count; i++){
+			if (!segmentRows[i].IsDead()){
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	public bool IsDestroyed(){
 		for (int i = 0; i < segmentRows.Count; i++){
 			if (segmentRows[i].IsDestroyed()){
