@@ -61,8 +61,6 @@ public class GUIController : MonoBehaviour {
 
 	public void BoostEQOffsetX(){
 		eqOffsetX += eqOffsetXBoost;
-
-		Debug.Log(eqOffsetX);
 	}
 
 	IEnumerator scrollEQUVs(){

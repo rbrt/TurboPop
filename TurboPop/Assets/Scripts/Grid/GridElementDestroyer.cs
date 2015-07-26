@@ -10,6 +10,7 @@ public class GridElementDestroyer : MonoBehaviour {
 	List<GridSegmentElement> elementsToClear;
 
 	TurboMeter turboMeter;
+	AffectBloom bloomController;
 
 	public static GridElementDestroyer Instance{
 		get {
@@ -20,6 +21,7 @@ public class GridElementDestroyer : MonoBehaviour {
 	void Awake(){
 		if (instance == null){
 			instance = this;
+			bloomController = FindObjectOfType<AffectBloom>();
 			elementsToClear = new List<GridSegmentElement>();
 		}
 	}
@@ -47,6 +49,7 @@ public class GridElementDestroyer : MonoBehaviour {
 		if (elementsToClear.Count >= matchThreshold){
 			DestroyElements(elementsToClear);
 			GUIController.Instance.BoostEQOffsetX();
+			bloomController.PopBlockEffect();
 		}
 	}
 
