@@ -46,6 +46,7 @@ public class GridElementDestroyer : MonoBehaviour {
 
 		if (elementsToClear.Count >= matchThreshold){
 			DestroyElements(elementsToClear);
+			GUIController.Instance.BoostEQOffsetX();
 		}
 	}
 

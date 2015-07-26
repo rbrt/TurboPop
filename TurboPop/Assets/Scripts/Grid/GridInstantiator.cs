@@ -42,6 +42,11 @@ public class GridInstantiator : MonoBehaviour {
 
 	public ParticleSystem GetParticlesForExplosion(Transform target, CubeColours colour){
 		var ps = GameObject.Instantiate(explosionParticleSystem, target.position, target.rotation) as ParticleSystem;
+
+		if (ps.GetComponent<Renderer>() == null){
+			return null;
+		}
+
 		ps.GetComponent<Renderer>().material = particleColours[(int)colour];
 
 		return ps;

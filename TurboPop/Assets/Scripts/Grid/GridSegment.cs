@@ -27,9 +27,6 @@ public class GridSegment : MonoBehaviour{
 
 	public void KillElementAtIndex(int x, int y){
 		segmentRows[y].KillElementAtIndex(x);
-
-		Debug.Log(segmentRows[y].GetSegmentElementAtIndex(x).ToString(),
-				  segmentRows[y].GetSegmentElementAtIndex(x).gameObject);
 	}
 
 	public GridSegmentRow GetSegmentRowAtIndex(int index){
