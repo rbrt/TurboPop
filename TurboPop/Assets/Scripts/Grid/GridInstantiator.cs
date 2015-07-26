@@ -5,6 +5,7 @@ public class GridInstantiator : MonoBehaviour {
 
 	[SerializeField] protected Material[] gridColours;
 	[SerializeField] protected Material[] particleColours;
+	[SerializeField] protected Material deadCubeColour;
 
 	protected int widthValue,
 				  heightValue;
@@ -44,6 +45,10 @@ public class GridInstantiator : MonoBehaviour {
 		ps.GetComponent<Renderer>().material = particleColours[(int)colour];
 
 		return ps;
+	}
+
+	public Material GetDeadCubeMaterial(){
+		return deadCubeColour;
 	}
 
 	public Material GetGridColourForType(CubeColours colour){

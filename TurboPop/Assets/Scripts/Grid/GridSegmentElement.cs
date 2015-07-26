@@ -1,17 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum CubeColours {Green, Yellow, Purple, Blue, TEMP}
+public enum CubeColours {Green, Yellow, Purple, Blue, TEMP, Dead}
 
 public class GridSegmentElement : MonoBehaviour {
 
 	CubeColours cubeColour;
 
-	bool destroyed;
+	public bool destroyed,
+		 dead;
 
 	public bool Destroyed {
 		get {
 			return destroyed;
+		}
+	}
+
+	public bool Dead {
+		get {
+			return dead;
+		}
+		set {
+			if (dead != value){
+				dead = value;
+				if (dead){
+					cubeColour = CubeColours.Dead;
+					GetComponent<MeshRenderer>().sharedMaterial = GridInstantiator.Instance.GetDeadCubeMaterial();
+				}
+			}
 		}
 	}
 
@@ -34,7 +50,7 @@ public class GridSegmentElement : MonoBehaviour {
 		if (this.destroyed){
 			return;
 		}
-		
+
 		this.destroyed = true;
 		this.StartSafeCoroutine(Die());
 	}

@@ -26,6 +26,10 @@ public class GridSegmentRow : MonoBehaviour {
 		elements.Add(element);
 	}
 
+	public void KillElementAtIndex(int x){
+		elements[x].Dead = true;
+	}
+
 	public GridSegmentElement GetSegmentElementAtIndex(int index){
 		return elements[index];
 	}

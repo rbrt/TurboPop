@@ -29,6 +29,10 @@ public class GridElementDestroyer : MonoBehaviour {
 	}
 
 	public void DestroyMatchedElements(GridSegmentElement element){
+		if (element.CubeColour == CubeColours.Dead){
+			return;
+		}
+
 		elementsToClear.Clear();
 		bool[,] checkedIndices = new bool[GridController.GridWidth, GridController.GridHeight];
 

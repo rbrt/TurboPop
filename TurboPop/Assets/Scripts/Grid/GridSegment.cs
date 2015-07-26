@@ -25,12 +25,23 @@ public class GridSegment : MonoBehaviour{
 		segmentRows.Add(row);
 	}
 
+	public void KillElementAtIndex(int x, int y){
+		segmentRows[y].KillElementAtIndex(x);
+
+		Debug.Log(segmentRows[y].GetSegmentElementAtIndex(x).ToString(),
+				  segmentRows[y].GetSegmentElementAtIndex(x).gameObject);
+	}
+
 	public GridSegmentRow GetSegmentRowAtIndex(int index){
 		return segmentRows[index];
 	}
 
 	public int GetIndexOfRowInSegment(GridSegmentRow row){
 		return segmentRows.IndexOf(row);
+	}
+
+	public GridSegmentRow GetRowContainingElement(GridSegmentElement element){
+		return segmentRows.FirstOrDefault(row => row.GetIndexOfElementInRow(element) >= 0);
 	}
 
 	public List<GridSegmentElement> GetAllElementsInSegment(){

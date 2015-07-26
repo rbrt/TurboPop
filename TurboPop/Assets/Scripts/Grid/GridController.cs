@@ -89,37 +89,6 @@ public class GridController : MonoBehaviour {
 		return gridSegments[0];
 	}
 
-	void HandleFrontmostSegmentOnAdvance(){
-		// if the frontmost segment is not destroyed, push it forward and "kill"
-		// any columns that remain.
-		if (!gridSegments[0].IsDestroyed()){
-			/*
-			This logic can come later, because it shouldn't matter until we have
-			reuse of segments working properly
-			*/
-		}
-
-		// Deparent frontmostSegment and remove from list
-		var oldFrontmostSegment = gridSegments[0];
-		var oldCoords = oldFrontmostSegment.transform.localPosition;
-		oldFrontmostSegment.transform.parent = null;
-
-		gridSegments.RemoveAt(0);
-
-		// Set bufferSegment as last segment in grid
-		gridSegments.Add(bufferSegment);
-
-		// Initialize last segment
-		bufferSegment.InitializeSegment();
-		bufferSegment.transform.parent = transform;
-		bufferSegment.transform.localPosition = new Vector3(oldCoords.x,
-															oldCoords.y,
-															oldCoords.z + SegmentCount * GridInstantiator.Offset);
-
-		// Set old frontmost segment as bufferSegment and clear it
-		SetBufferSegment(oldFrontmostSegment);
-	}
-
 	/*
 	Builds a 2D array of GridSegmentElements with no other GridSegmentElements in front
 	of them. Indices in the array are not searched for again, because they are marked found
@@ -146,6 +115,51 @@ public class GridController : MonoBehaviour {
 		}
 
 		return frontmostElements;
+	}
+
+	void HandleUndestroyedSegmentElements(GridSegment segmentToTest){
+		// Get coordinates of segment elements which are not destroyed
+		var elements = segmentToTest.GetAllUndestroyedElementsInSegment();
+
+		// For every found element, go through each segment and mark the element
+		// at the corresponding index "Dead"
+		elements.ForEach(element => FindAndKillAllSegmentsAtIndex(segmentToTest, element));
+	}
+
+	void FindAndKillAllSegmentsAtIndex(GridSegment segment, GridSegmentElement element){
+		var row = segment.GetRowContainingElement(element);
+		int y = segment.GetIndexOfRowInSegment(row);
+		int x = row.GetIndexOfElementInRow(element);
+
+		gridSegments.ForEach(gridSegment => gridSegment.KillElementAtIndex(x, y));
+	}
+
+	void HandleFrontmostSegmentOnAdvance(){
+		// if the frontmost segment is not destroyed, push it forward and "kill"
+		// any columns that remain.
+		if (!gridSegments[0].IsDestroyed()){
+			HandleUndestroyedSegmentElements(gridSegments[0]);
+		}
+
+		// Deparent frontmostSegment and remove from list
+		var oldFrontmostSegment = gridSegments[0];
+		var oldCoords = oldFrontmostSegment.transform.localPosition;
+		oldFrontmostSegment.transform.parent = null;
+
+		gridSegments.RemoveAt(0);
+
+		// Set bufferSegment as last segment in grid
+		gridSegments.Add(bufferSegment);
+
+		// Initialize last segment
+		bufferSegment.InitializeSegment();
+		bufferSegment.transform.parent = transform;
+		bufferSegment.transform.localPosition = new Vector3(oldCoords.x,
+															oldCoords.y,
+															oldCoords.z + SegmentCount * GridInstantiator.Offset);
+
+		// Set old frontmost segment as bufferSegment and clear it
+		SetBufferSegment(oldFrontmostSegment);
 	}
 
 	void LogOutFrontmostElements(){
