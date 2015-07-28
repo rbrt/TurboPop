@@ -50,6 +50,8 @@ public class GridElementDestroyer : MonoBehaviour {
 			DestroyElements(elementsToClear);
 			GUIController.Instance.BoostEQOffsetX();
 			bloomController.PopBlockEffect();
+
+			WireframeController.Instance.UpdateWireframe();
 		}
 	}
 
@@ -62,6 +64,8 @@ public class GridElementDestroyer : MonoBehaviour {
 	public void DestroyElements(List<GridSegmentElement> elements){
 		elementsToClear.ForEach(x => x.DestroyElement());
 		turboMeter.IncreaseTurbo(elementsToClear.Count);
+
+		WireframeController.Instance.UpdateWireframe();
 	}
 
 	/*

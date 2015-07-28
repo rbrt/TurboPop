@@ -148,15 +148,9 @@ public class GridInstantiator : MonoBehaviour {
 									 .position
 									 .z;
 
-		for (float width = -widthValue / 2; width <= (widthValue - 1) / 2; width++){
-			for (float height = -heightValue / 2; height <= (heightValue - 1) / 2; height++){
-				var segment = GameObject.Instantiate(wireframeGridSegment);
-				segment.transform.position = new Vector3(height * offset, width * offset, 0);
-				segment.transform.parent = display.transform;
-			}
-		}
+		var wireframeController = display.AddComponent<WireframeController>();
+		wireframeController.InitWireframe(targetZ, offset, widthValue, heightValue, wireframeGridSegment);
 
-		display.transform.position = new Vector3(0, 0, targetZ);
 	}
 
 }
