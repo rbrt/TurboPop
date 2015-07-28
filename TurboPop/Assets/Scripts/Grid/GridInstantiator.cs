@@ -11,6 +11,7 @@ public class GridInstantiator : MonoBehaviour {
 				  heightValue;
 
 	[SerializeField] protected GridSegmentElement gridSegmentElementPrefab;
+	[SerializeField] protected GameObject wireframeGridSegment;
 	[SerializeField] protected ParticleSystem explosionParticleSystem;
 
 	float offset = 1.2f,
@@ -71,8 +72,15 @@ public class GridInstantiator : MonoBehaviour {
 	public void CreateGrid(){
 		var grid = GridController.Instance;
 
+		GridSegment targetSegment = null;
+
 		for (int depth = 0; depth < GridController.SegmentCount; depth++){
 			var segment = CreateGridSegment(depth);
+
+			if (depth == 0){
+				targetSegment = segment;
+			}
+
 			segment.transform.parent = grid.transform;
 			grid.AddSegment(segment);
 		}
@@ -83,6 +91,8 @@ public class GridInstantiator : MonoBehaviour {
 		grid.transform.position = new Vector3(grid.transform.position.x,
 											  grid.transform.position.y,
 											  initialDepth);
+
+		CreateWireframeGridDisplay(targetSegment);
 	}
 
 	public CubeColours GetRandomCubeColour(){
@@ -111,7 +121,7 @@ public class GridInstantiator : MonoBehaviour {
 		for (float height = -heightValue / 2; height <= (heightValue - 1) / 2; height++){
 			var element = CreateElement(row.transform, new Vector3(height * offset,
 												   			   	   width * offset,
-												   			   	   0));
+												   			   	   -offset));
 			element.transform.parent = row.transform;
 			row.AddElement(element);
 		}
@@ -128,6 +138,25 @@ public class GridInstantiator : MonoBehaviour {
 		block.transform.localPosition = position;
 
 		return block;
+	}
+
+	void CreateWireframeGridDisplay(GridSegment targetSegment){
+		var display = new GameObject("Wireframe Grid");
+		float targetZ = targetSegment.GetSegmentRowAtIndex(0)
+									 .GetSegmentElementAtIndex(0)
+									 .transform
+									 .position
+									 .z;
+
+		for (float width = -widthValue / 2; width <= (widthValue - 1) / 2; width++){
+			for (float height = -heightValue / 2; height <= (heightValue - 1) / 2; height++){
+				var segment = GameObject.Instantiate(wireframeGridSegment);
+				segment.transform.position = new Vector3(height * offset, width * offset, 0);
+				segment.transform.parent = display.transform;
+			}
+		}
+
+		display.transform.position = new Vector3(0, 0, targetZ);
 	}
 
 }

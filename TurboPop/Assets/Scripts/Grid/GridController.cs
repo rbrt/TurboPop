@@ -35,7 +35,7 @@ public class GridController : MonoBehaviour {
 	void Update(){
 		if (Time.time - lastMoveTime > movementFrequency){
 			lastMoveTime = Time.time;
-			AdvanceSegments();
+			this.StartSafeCoroutine(AdvanceSegments());
 		}
 	}
 
@@ -77,12 +77,14 @@ public class GridController : MonoBehaviour {
 		gridSegments.Add(segment);
 	}
 
-	public void AdvanceSegments(){
-		HandleFrontmostSegmentOnAdvance();
-
+	public IEnumerator AdvanceSegments(){
 		gridSegments.ForEach(segment => {
 			this.StartSafeCoroutine(MoveSegment(segment));
 		});
+
+		yield return new WaitForSeconds(.2f);
+
+		HandleFrontmostSegmentOnAdvance();
 	}
 
 	public GridSegment GetFrontmostSegment(){
@@ -135,8 +137,7 @@ public class GridController : MonoBehaviour {
 	}
 
 	void HandleFrontmostSegmentOnAdvance(){
-		// if the frontmost segment is not destroyed, push it forward and "kill"
-		// any columns that remain.
+		// if the frontmost segment is not destroyed, kill any columns that remain.
 		if (!gridSegments[0].IsDestroyed()){
 			HandleUndestroyedSegmentElements(gridSegments[0]);
 

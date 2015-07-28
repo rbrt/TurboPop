@@ -25,6 +25,7 @@ public class GridSegmentElement : MonoBehaviour {
 				dead = value;
 				if (dead){
 					cubeColour = CubeColours.Dead;
+					transform.parent = null;
 					GetComponent<MeshRenderer>().sharedMaterial = GridInstantiator.Instance.GetDeadCubeMaterial();
 				}
 			}
@@ -38,6 +39,10 @@ public class GridSegmentElement : MonoBehaviour {
 	}
 
 	public void InitializeElement(CubeColours cubeColour){
+		if (dead){
+			return;
+		}
+
 		this.cubeColour = cubeColour;
 		GetComponent<MeshRenderer>().enabled = true;
 		GetComponent<Collider>().enabled = true;
