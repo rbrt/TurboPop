@@ -40,7 +40,7 @@ public class WireframeController : MonoBehaviour {
 			x++;
 		}
 
-		transform.position = new Vector3(0, 0, targetZ);
+		transform.position = new Vector3(0, 0, targetZ - offset);
 
 	}
 

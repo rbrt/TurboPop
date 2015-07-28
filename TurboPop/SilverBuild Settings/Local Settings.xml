@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SilverBuildSettings>
+	<UseTabsForBuildPhaseDisplay>False</UseTabsForBuildPhaseDisplay>
+	<CurrentPhaseTabIndex>0</CurrentPhaseTabIndex>
+	<CurrentBuildTargetName>Mac OS X</CurrentBuildTargetName>
+	<BuildTargetPaths>
+		<TargetPathPair>
+			<TargetName>Mac OS X</TargetName>
+			<TargetPath>/Users/rob/programming/TurboPop/TurboPop Build</TargetPath>
+		</TargetPathPair>
+	</BuildTargetPaths>
+	<CurrentSelectedTargetNames>
+		<TargetName>Mac OS X</TargetName>
+	</CurrentSelectedTargetNames>
+</SilverBuildSettings>

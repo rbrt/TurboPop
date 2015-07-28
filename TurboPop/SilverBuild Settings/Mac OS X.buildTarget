@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BuildTargetInfo>
+	<Name>Mac OS X</Name>
+	<Target>iOS</Target>
+	<FirstScenePath>Assets/Scenes/Prototyping.unity</FirstScenePath>
+	<FileName>Build</FileName>
+	<Options>513</Options>
+	<BuildPhaseSettings>
+		<AddToXcodeBuildPhase>
+			<Enabled>False</Enabled>
+			<Count>0</Count>
+			<BfgArc>False</BfgArc>
+		</AddToXcodeBuildPhase>
+		<EditorPlatformCheckBuildPhase>
+			<Enabled>True</Enabled>
+		</EditorPlatformCheckBuildPhase>
+	</BuildPhaseSettings>
+	<EnabledScenePaths>
+		<EnabledScene>Assets/Scenes/Prototyping.unity</EnabledScene>
+	</EnabledScenePaths>
+</BuildTargetInfo>

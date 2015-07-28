@@ -1,0 +1,530 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf470
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;\red51\green153\blue0;\red204\green0\blue203;
+\red245\green120\blue0;\red85\green142\blue40;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid1\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid1}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}}
+\margl1440\margr1440\vieww16620\viewh17100\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\f0\b\fs72 \cf0 SilverBuild
+\b0\fs24 \
+\
+Daniel Brauer\
+daniel@silverbackgames.com\
+\
+
+\b\fs36 About
+\b0\fs24 \
+\
+\pard\tx560\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+\cf0 SilverBuild's main objective is to be a one-click build solution for each of the different versions of your Unity project. It is an extensible system for managing and building multiple build targets. It is primarily designed to do two things that Unity does not currently offer:\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+\cf0 \
+\pard\tx220\tx720\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\li720\fi-720\pardirnatural
+\ls1\ilvl0\cf0 {\listtext	1.	}Simple, cross-platform build pre-processing and post-processing using your favourite Unity scripting language.\
+{\listtext	2.	}Manage many build targets in a single project with arbitrary settings for each target.\
+\pard\tx560\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+\cf0 \
+\pard\tx560\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\b\fs36 \cf0 Installation
+\b0\fs24  (done automatically when importing from the .unitypackage or Asset Store)\
+\
+Place 
+\b SilverBuild.dll
+\b0  into a folder named 
+\b Editor
+\b0  in your project's Assets folder.\
+Optionally, place any 
+\b BuildPhase
+\b0  scripts into the same 
+\b Editor
+\b0  folder, or one in a later compilation phase.\
+\
+
+\b\fs36 Using SilverBuild
+\b0\fs24 \
+\
+SilverBuild is managed from a new settings window, available by choosing 
+\b File>SilverBuild Settings\'85
+\b0  or by pushing 
+\b Command-Option-B
+\b0  on Mac OS, and 
+\b Control-Alt-B
+\b0  on Windows.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+\cf0 \
+
+\b Targets
+\b0 \
+\
+SilverBuild uses targets, which are collections of build settings. An example target might be Windows Collector's Edition English, or iPad Freemium Multilingual. All the settings to the right of the Targets list pertain only to the selected target.\
+\
+
+\b Title
+\b0 \
+\
+The 
+\b title
+\b0  of the selected target is displayed at the top of the window.\
+You can 
+\b rename
+\b0  a target a target by clicking its title at the top of the window, or by pushing enter/return. Push enter/return to confirm the new name.\
+You can 
+\b duplicate
+\b0  or 
+\b delete
+\b0  a target by clicking the appropriate button at the top-right. Targets can only be created through duplication.\
+\
+
+\b Executable Settings
+\b0 \
+\
+This section contains the settings available in the standard Build Settings window.\
+
+\b Destination Path
+\b0  is where the target will be built. You only need to set this path once unless you want to change it. Old builds will be overwritten without notification.\
+
+\b Platform
+\b0  defines the target platform. Note that although all of Unity's supported platforms will be listed in this menu, Unity cannot build to platforms for which you do not have a license.\
+
+\b Append if possible
+\b0  only applies to indirect build targets, such as iPhone. If it is enabled, and there is already a build at the destination path, Unity will attempt to update game data without making any other modifications to the project.\
+\
+
+\b Scenes
+\b0 \
+\
+The scenes list is automatically populated with all scene files in Assets/Scenes.\
+Use the checkboxes to 
+\b include/exclude
+\b0  scenes in a build. Use the Shift key when clicking a checkbox to enable/disable a range.\
+Use the radio buttons to define the 
+\b first scene
+\b0 . SilverBuild is designed to support loading scenes by name rather than index.\
+The 
+\b Enable/Disable All
+\b0  buttons allow you to quickly include all or just a few scenes in a build.\
+\
+
+\b Build Phases
+\b0 \
+\
+This is where custom build settings are shown. Phases are discovered by reflection, so any subclass of BuildPhase has the opportunity to display settings here, store its own information in each target, and perform tasks before and after Unity makes a build. There is more detail on custom build phases in the 
+\b Extending SilverBuild
+\b0  section.\
+Most build phases have a single checkbox, and a 
+\b status light
+\b0  to tell you whether there are any problems with that phase.\
+If a status light is 
+\b green
+\b0 , the phase expects to execute properly when the build is made.\
+If a status light is 
+\b red
+\b0  or 
+\b yellow
+\b0 , then there may be a problem. You can hover over the light with the mouse cursor to get more information.\
+\
+
+\b Building
+\b0 \
+\
+When you wish to build a target, simply select it and click 
+\b Build
+\b0 . If the Build button is disabled, any problems will be displayed to the left of the Build button.\
+\
+
+\b Version Control
+\b0 \
+\
+SilverBuild is designed to work for solitary projects, or with external version control systems such as Subversion. All settings are stored in the the 
+\b SilverBuild Settings
+\b0  folder, next to Assets. You should keep this folder and its contents under version control, with the exception of 
+\b Local Settings.xml
+\b0 . This file contains user-specific information.\
+Asset Server is not supported at this time.\
+\
+
+\b\fs36 Extending SilverBuild
+\b0\fs24 \
+\
+SilverBuild's main strength is its extensibility through custom BuildPhases. You can make your own BuildPhases by subclassing BuildPhase in your favourite scripting language. SilverBuild will detect all BuildPhases in a project, and every target in that project will store its own settings for each BuildPhase.\
+\
+For now, this is the API. Required members are abstract. The best way to learn it is probably to read the included examples. Remember to put your script into an Editor folder, and include the SilverBuild namespace.
+\f1 \
+\pard\pardeftab720
+\cf0 \
+\
+\cf2 namespace\cf0  SilverBuild \{\
+\
+\pard\pardeftab720
+
+\f0\fs28 \cf0 	\cf2 public\cf0  \cf2 abstract\cf0  \cf2 class\cf0  BuildPhase \{\
+		\
+		
+\i \cf3 // The temp directory, created at the beginning of a build and deleted\
+
+\i0 \cf0 		
+\i \cf3 // at the very end. Use this to store temporary data between pre- and\
+
+\i0 \cf0 		
+\i \cf3 // post-process that would not otherwise survive recompilation.\
+
+\i0 \cf0 		\
+		\cf2 public\cf0  \cf2 const\cf0  \cf2 string\cf0  kTempDirectory = \cf4 "SilverBuild Temp"\cf0 ;\
+		\
+		\cf5 #region Description\
+\cf0 		\
+		
+\i \cf3 // Full name of the phase.\
+
+\i0 \cf0 		
+\i \cf3 // By default, this name will be displayed in the Settings window\
+
+\i0 \cf0 		\
+		\cf2 abstract\cf0  \cf2 public\cf0  \cf2 string\cf0  Name \{\cf2 get\cf0 ;\}\
+		\
+		
+\i \cf3 // Category of the phase. Identically categorized phases will be grouped\
+
+\i0 \cf0 		\
+		\cf2 abstract\cf0  \cf2 public\cf0  \cf2 string\cf0  Category \{\cf2 get\cf0 ;\}\
+		\
+		
+\i \cf3 // A description of what the phase is doing.\
+
+\i0 \cf0 		
+\i \cf3 // This is displayed in progress bars while the phase executes\
+
+\i0 \cf0 		\
+		\cf2 abstract\cf0  \cf2 public\cf0  \cf2 string\cf0  ActiveDescription \{\cf2 get\cf0 ;\}\
+		\
+		\cf5 #endregion\
+\cf0 		\
+		\cf5 #region Build Steps\
+\cf0 		\
+		
+\i \cf3 // Whether the phase supports pre-processing\
+
+\i0 \cf0 		\
+		\cf2 abstract\cf0  \cf2 public\cf0  \cf2 bool\cf0  HasPreprocess \{\
+			\cf2 get\cf0 ;\
+		\}\
+		\
+		
+\i \cf3 // The priority for execution in the preprocess phase\
+
+\i0 \cf0 		
+\i \cf3 // Lower numbers are executed earlier\
+
+\i0 \cf0 		\
+		\cf2 virtual\cf0  \cf2 public\cf0  \cf2 int\cf0  PreprocessOrder \{\
+			\cf2 get\cf0  \{\
+				\cf2 return\cf0  \cf4 0\cf0 ;\
+			\}\
+		\}\
+		\
+		
+\i \cf3 // Whether the phase supports post-processing\
+
+\i0 \cf0 		\
+		\cf2 abstract\cf0  \cf2 public\cf0  \cf2 bool\cf0  HasPostprocess \{\
+			\cf2 get\cf0 ;\
+		\}\
+		\
+		
+\i \cf3 // The priority for execution in the postprocess phase\
+
+\i0 \cf0 		
+\i \cf3 // Lower numbers are executed earlier\
+
+\i0 \cf0 		\
+		\cf2 virtual\cf0  \cf2 public\cf0  \cf2 int\cf0  PostprocessOrder \{\
+			\cf2 get\cf0  \{\
+				\cf2 return\cf0  \cf4 0\cf0 ;\
+			\}\
+		\}\
+		\
+		
+\i \cf3 // Called before build is made, if HasPreprocess && SupportsTarget() && Enabled\
+
+\i0 \cf0 		
+\i \cf3 // Changes to the scene list will be respected for the current build.\
+
+\i0 \cf0 		
+\i \cf3 // Return false to fail the build.\
+
+\i0 \cf0 		\
+		\cf2 virtual\cf0  \cf2 public\cf0  \cf2 bool\cf0  PreprocessBuild(\cf2 BuildTarget\cf0  target, List<\cf2 string\cf0 > scenes) \{\
+			Console.WriteLine(\cf4 "Preprocess not implemented!"\cf0 );\
+			\cf2 return\cf0  \cf4 false\cf0 ;\
+		\}\
+		\
+		
+\i \cf3 // Called after build is made, if HasPostprocess && SupportsTarget() && Enabled\
+
+\i0 \cf0 		
+\i \cf3 // Return false to fail the build.\
+
+\i0 \cf0 		\
+		\cf2 virtual\cf0  \cf2 public\cf0  \cf2 bool\cf0  PostprocessBuild(\cf2 BuildTarget\cf0  target, \cf2 string\cf0  buildPath, \cf2 string\cf0  dataPath) \{\
+			Console.WriteLine(\cf4 "Postprocess not implemented!"\cf0 );\
+			\cf2 return\cf0  \cf4 false\cf0 ;\
+		\}\
+		\
+		
+\i \cf3 // Called just before the temp directory is deleted (the final build step),\
+
+\i0 \cf0 		
+\i \cf3 // whether the build succeeded or not.\
+
+\i0 \cf0 		
+\i \cf3 // This is where you should restore anything that has been changed, and needs\
+
+\i0 \cf0 		
+\i \cf3 // to be changed back regardless of how the build went.\
+
+\i0 \cf0 		\
+		\cf2 virtual\cf0  \cf2 public\cf0  \cf2 void\cf0  Clean(\cf2 BuildTarget\cf0  target, \cf2 string\cf0  buildPath) \{\
+			\cf2 return\cf0 ;\
+		\}\
+		\
+		\cf5 #endregion\
+\cf0 		\
+		\cf5 #region Saved Data\
+\cf0 		\
+		
+\i \cf3 // Whether the phase is currently enabled or not\
+
+\i0 \cf0 		
+\i \cf3 // Only enabled phases are executed during builds\
+
+\i0 \cf0 		\
+		\cf2 public\cf0  \cf2 bool\cf0  Enabled \{\
+			\cf2 get\cf0  \{\
+				\cf2 return\cf0  m_enabled;\
+			\}\
+			\cf2 set\cf0  \{\
+				\cf2 if\cf0  (\cf2 value\cf0  != m_enabled) \{\
+					m_enabled = \cf2 value\cf0 ;\
+					Dirty = \cf4 true\cf0 ;\
+				\}\
+			\}\
+		\}\
+		\cf2 private\cf0  \cf2 bool\cf0  m_enabled;\
+		\
+		
+\i \cf3 // A phase should mark itself dirty if it has information that needs to be saved to disk\
+
+\i0 \cf0 		
+\i \cf3 // See the Checkbox function for an example\
+
+\i0 \cf0 		\
+		\cf2 public\cf0  \cf2 bool\cf0  Dirty \{ \cf2 get\cf0 ; \cf2 protected\cf0  \cf2 set\cf0 ; \}\
+		\
+		
+\i \cf3 // Serialization function\
+
+\i0 \cf0 		\
+		\cf2 public\cf0  \cf2 virtual\cf0  XmlNode ToXml(XmlDocument doc) \{\
+			\
+			\cf2 var\cf0  root = doc.CreateElement(GetType().ToString());\
+			\
+			root.AddBoolElement(\cf4 "Enabled"\cf0 , Enabled);\
+			\
+			Dirty = \cf4 false\cf0 ;\
+			\
+			\cf2 return\cf0  root;\
+		\}\
+		\
+		
+\i \cf3 // Deserialization function\
+
+\i0 \cf0 		\
+		\cf2 public\cf0  \cf2 virtual\cf0  \cf2 void\cf0  LoadFromXml(XmlNode node) \{\
+			Enabled = node[\cf4 "Enabled"\cf0 ].GetInnerBool();\
+		\}\
+		\
+		\cf5 #endregion\
+\cf0 		\
+		\cf5 #region Display\
+\cf0 		\
+		
+\i \cf3 // The priority for display order in the settings window.\
+
+\i0 \cf0 		
+\i \cf3 // Lower numbers are displayed earlier\
+
+\i0 \cf0 		\
+		\cf2 virtual\cf0  \cf2 public\cf0  \cf2 int\cf0  DisplayOrder \{\
+			\cf2 get\cf0  \{\
+				\cf2 return\cf0  \cf4 0\cf0 ;\
+			\}\
+		\}\
+		\
+		
+\i \cf3 // Description of the phase's current status.\
+
+\i0 \cf0 		
+\i \cf3 // By default, this will be displayed as a tooltip on the phase's status light\
+
+\i0 \cf0 		\
+		\cf2 virtual\cf0  \cf2 public\cf0  \cf2 string\cf0  StatusTooltip \{\
+			\cf2 get\cf0  \{\
+				\cf2 return\cf0  \cf4 ""\cf0 ;\
+			\}\
+		\}\
+		\
+		
+\i \cf3 // Status code for the phase.\
+
+\i0 \cf0 		
+\i \cf3 // If Normal, builds are allowed\
+
+\i0 \cf0 		
+\i \cf3 // If Indeterminate, builds are not allowed but no error is shown\
+
+\i0 \cf0 		
+\i \cf3 // If Error, builds are not allowed and the user will be asked to fix errors before building\
+
+\i0 \cf0 		
+\i \cf3 // By default, Status is used to color the phase's status light\
+
+\i0 \cf0 		\
+		\cf2 virtual\cf0  \cf2 public\cf0  BuildPhaseStatus Status \{\
+			\cf2 get\cf0  \{\
+				\cf2 return\cf0  BuildPhaseStatus.Normal;\
+			\}\
+		\}\
+		\
+		
+\i \cf3 // Whether the phase supports a given platform\
+
+\i0 \cf0 		
+\i \cf3 // By default, phases that do not support a platform will be displayed but disabled\
+
+\i0 \cf0 		\
+		\cf2 abstract\cf0  \cf2 public\cf0  \cf2 bool\cf0  SupportsTarget(\cf2 BuildTarget\cf0  target);\
+		
+\i \cf3 // Called by settings window on focus, and after serialization\
+
+\i0 \cf0 		
+\i \cf3 // This is a good place to confirm status\
+
+\i0 \cf0 		\
+		\cf2 public\cf0  \cf2 virtual\cf0  \cf2 void\cf0  Refresh() \{\
+			\
+		\}\
+		\
+		
+\i \cf3 // Display function\
+
+\i0 \cf0 		
+\i \cf3 // By default, displays a checkbox, the phase name, and its status light all on one line\
+
+\i0 \cf0 		\
+		\cf2 public\cf0  \cf2 virtual\cf0  \cf2 void\cf0  OnGUI() \{\
+			\cf2 GUILayout\cf0 .BeginHorizontal();\
+				Enabled = \cf2 GUILayout\cf0 .Toggle(Enabled, Name);\
+				\cf2 GUILayout\cf0 .FlexibleSpace();\
+				\cf2 if\cf0  (Enabled) \{\
+					StatusLight();\
+				\}  \cf2 else\cf0  \{\
+					DisabledStatusLight();\
+				\}\
+			\cf2 GUILayout\cf0 .EndHorizontal();\
+		\}\
+		\
+		
+\i \cf3 // A disabled status light, usually used for when a phase is disabled\
+
+\i0 \cf0 		\
+		\cf2 protected\cf0  \cf2 void\cf0  DisabledStatusLight() \{\
+			\cf2 GUI\cf0 .enabled = \cf4 false\cf0 ;\
+			\cf2 GUILayout\cf0 .Label(\cf4 ""\cf0 , \cf2 EditorStyles\cf0 .radioButton);\
+			\cf2 GUI\cf0 .enabled = \cf4 true\cf0 ;\
+		\}\
+		\
+		
+\i \cf3 // A status light that changes colour according to Status, and has the status tooltip\
+
+\i0 \cf0 		\
+		\cf2 protected\cf0  \cf2 void\cf0  StatusLight() \{\
+			\cf2 switch\cf0  (Status) \{\
+				\cf2 case\cf0  BuildPhaseStatus.Indeterminate:\
+					\cf2 GUI\cf0 .color = \cf2 Color\cf0 .yellow;\
+					\cf2 break\cf0 ;\
+				\cf2 case\cf0  BuildPhaseStatus.Normal:\
+					\cf2 GUI\cf0 .color = \cf2 Color\cf0 .green;\
+					\cf2 break\cf0 ;\
+				\cf2 case\cf0  BuildPhaseStatus.Error:\
+					\cf2 GUI\cf0 .color = \cf2 Color\cf0 .red;\
+					\cf2 break\cf0 ;\
+			\}\
+			\cf2 GUILayout\cf0 .Label(\cf2 new\cf0  \cf2 GUIContent\cf0 (\cf4 ""\cf0 , StatusTooltip), \cf2 EditorStyles\cf0 .radioButton);\
+			\cf2 GUI\cf0 .color = \cf2 Color\cf0 .white;\
+		\}\
+		\
+		\cf5 #endregion\
+\cf0 	\}\
+\pard\pardeftab720
+
+\f1\fs24 \cf0 	\
+	\
+	\cf2 public\cf0  \cf2 enum\cf0  BuildPhaseStatus \{\
+		Normal,\
+		Indeterminate,\
+		Error\
+	\}\
+\
+	\cf2 public\cf0  \cf2 class\cf0  BuildWindow : \cf2 EditorWindow\cf0  \{\
+		\
+\pard\pardeftab720
+
+\f0\fs28 \cf0 		
+\i \cf3 // The name of the current target\
+
+\i0 \cf0 		\
+		\cf2 public\cf0  \cf2 static\cf0  \cf2 string\cf0  TargetName \{\
+			\cf2 get\cf0 ;\
+		\}\
+		\
+		
+\i \cf3 // The platform of the current target\
+
+\i0 \cf0 		\
+		\cf2 public\cf0  \cf2 static\cf0  \cf2 BuildTarget\cf0  TargetPlatform \{\
+			\cf2 get\cf0 ;\
+		\}\
+\
+
+\i \cf6 		//BuildOptions flags for current target
+\i0 \cf0 \
+\pard\pardeftab720
+
+\f1\fs24 \cf0 		\cf2 public\cf0  \cf2 static\cf0  \cf2 int\cf0  TargetOptions \{\
+			\cf2 get\cf0 ;\
+		\}
+\f0\fs28 \
+		\
+		
+\i \cf3 // Guarantees a repaint to occur in the next 100ms\
+\pard\pardeftab720
+
+\i0 \cf0 		\
+		\cf2 public\cf0  \cf2 static\cf0  \cf2 void\cf0  PostRepaint();\
+		\
+		
+\i \cf3 // Register a function to be called once, on the next Update.\
+
+\i0 \cf0 		\
+		\cf2 public\cf0  \cf2 static\cf0  \cf2 void\cf0  RegisterUpdateEvent(Action newEvent);\
+\pard\pardeftab720
+
+\f1\fs24 \cf0 \
+	\}\
+	\
+\}\
+\
+}

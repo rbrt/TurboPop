@@ -72,7 +72,7 @@ public class GridSegmentElement : MonoBehaviour {
 			yield return null;
 		}
 
-		Destroy(particles);
+		Destroy(particles.gameObject);
 
 		GetComponent<MeshRenderer>().enabled = false;
 		GetComponent<Collider>().enabled = false;
