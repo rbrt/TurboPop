@@ -7,10 +7,4 @@ public class ReactToAudioTest : MonoBehaviour {
 
 	bool rotating = false;
 
-	// Update is called once per frame
-	void Update () {
-		if (AudioFilterTest.currentValue >= thresholdForResponse && !rotating){
-		}
-	}
-
 }

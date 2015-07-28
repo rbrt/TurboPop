@@ -25,6 +25,10 @@ public class GridController : MonoBehaviour {
 
 			lastMoveTime = Time.time;
 		}
+		else{
+			Destroy(this.gameObject);
+			Debug.Log("lol");
+		}
 	}
 
 	void Start(){
