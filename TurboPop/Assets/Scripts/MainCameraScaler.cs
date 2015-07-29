@@ -14,7 +14,4 @@ public class MainCameraScaler : MonoBehaviour {
 		GetComponent<Camera>().fieldOfView = GetComponent<Camera>().fieldOfView * targetRatio / currentRatio;
 	}
 
-	void Update () {
-
-	}
 }
